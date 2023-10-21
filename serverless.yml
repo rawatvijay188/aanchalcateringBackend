@@ -1,0 +1,33 @@
+service: CATERING-SERVICE
+
+plugins:
+  - serverless-offline
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  exclude:
+    - '**/__tests__/**'
+
+custom:
+  serveless-offline:
+    httpport: 1001
+    useChildProcesses: true
+    lambdaPort: 3001
+    host: '0.0.0.0'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  memorySize: 256
+
+functions:
+  LambdaFunction:
+    handler: index.handler
+    timeout: 900
+    events:
+      - http:
+          path: /cateringService
+          method: ANY
