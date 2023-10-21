@@ -1,5 +1,5 @@
 const { testFunc } = require("./crudFunctions");
-const { getMenuItems } = require("./menuCrudFunction");
+const { getMenuItems, add_menu_item } = require("./menuCrudFunction");
 const services = {
     test: {
         description: "test function",
@@ -9,7 +9,11 @@ const services = {
         description: "fetch menu items from DB",
         method: () => getMenuItems()
     },
-
+    add_menu_item: {
+        description: "add menu category and  item to DB",
+        method: (event) => add_menu_item(event)
+    },
+    // {"service":"add_menu_item","category":"test", "item":"testingg"}
 }
 
 async function checkServices(event) {
