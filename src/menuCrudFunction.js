@@ -12,7 +12,11 @@ async function update_menu_item(event){
     executeQuery(`SELECT catering.update_menu_details('${event.id}','${event.category}', '${event.item}')`)
 }
 
+async function delete_menu_item(event){
+    executeQuery(`SELECT catering.delete_menu_item('${event.id}')`)
+}
 
 
-module.exports ={getMenuItems,add_menu_item,update_menu_item}
+
+module.exports ={getMenuItems,add_menu_item,update_menu_item, delete_menu_item}
 

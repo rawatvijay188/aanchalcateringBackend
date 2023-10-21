@@ -45,3 +45,14 @@ BEGIN
     WHERE id = update_id;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- 4
+
+CREATE OR REPLACE FUNCTION catering.delete_menu_item(delete_id INT)
+RETURNS VOID AS $$
+BEGIN
+    -- Delete the menu item based on provided ID
+    DELETE FROM catering.menu WHERE id = delete_id;
+END;
+$$ LANGUAGE plpgsql;
