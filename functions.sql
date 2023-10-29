@@ -13,6 +13,22 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+--2
+CREATE OR REPLACE FUNCTION get_menu_items_by_category(p_category VARCHAR)
+RETURNS TABLE (
+    id INT,
+    category VARCHAR(50),
+    item VARCHAR(50)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT menu.id, menu.category, menu.item
+    FROM public.menu
+    WHERE menu.category = p_category;
+END;
+$$ LANGUAGE plpgsql;
+
 -- 2
 
 CREATE OR REPLACE FUNCTION public.add_menu_item(category VARCHAR(50), item VARCHAR(50))
@@ -57,7 +73,16 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
+--- 5
+CREATE OR REPLACE FUNCTION get_unique_menu_categories()
+RETURNS TABLE (
+    category VARCHAR(50)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT DISTINCT menu.category FROM public.menu;
+END;
+$$ LANGUAGE plpgsql;
 
 --                 INGEDRIDIENTS FUNCTIONS ----------
 -- 5
@@ -137,3 +162,35 @@ END;
 $$
 LANGUAGE plpgsql;
 
+---9
+
+SELECT id, category, item, rate_per_unit, unit
+	FROM public.ingredients;
+	
+CREATE OR REPLACE FUNCTION get_unique_ingredient_categories()
+RETURNS TABLE (
+    category VARCHAR(50)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT DISTINCT ingredients.category FROM public.ingredients;
+END;
+$$ LANGUAGE plpgsql;
+
+
+--10
+CREATE OR REPLACE FUNCTION get_ingredients_by_category(p_category VARCHAR)
+RETURNS TABLE (
+    id INT,
+    category VARCHAR(50),
+    item VARCHAR(50),
+    rate_per_unit FLOAT,
+    unit VARCHAR(50)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT ingredients.id, ingredients.category, ingredients.item, ingredients.rate_per_unit, ingredients.unit
+    FROM public.ingredients
+    WHERE ingredients.category = p_category;
+END;
+$$ LANGUAGE plpgsql;

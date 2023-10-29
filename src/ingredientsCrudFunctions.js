@@ -1,7 +1,7 @@
 const { executeQuery } = require("./postgres_connection");
 
 
-async function select_ingeridient(event) {
+async function selectAllIngeridient(event) {
   try {
     console.log(`SELECT * FROM public.get_ingredients_by_category('${event.category}')`);
     let data = await executeQuery(`SELECT * FROM public.get_ingredients_by_category('${event.category}')`);
@@ -54,5 +54,23 @@ async function delete_ingeridient(event) {
   }
 }
 
+async function get_unique_ingredient_categories() {
+  try {
+    let data = await executeQuery(`SELECT * FROM get_unique_ingredient_categories() `);
+    return data
+  } catch (error) {
+    console.error('Error executing function:', error);
+  }
+}
 
-module.exports = { add_ingeridient, select_ingeridient,update_ingeridient,delete_ingeridient }
+async function get_ingredients_by_category(event) {
+  try {console.log({event});
+    let data = await executeQuery(`SELECT * FROM get_ingredients_by_category('${event.category}') `);
+    return data
+  } catch (error) {
+    console.error('Error executing function:', error);
+  }
+}
+
+
+module.exports = { add_ingeridient, selectAllIngeridient,update_ingeridient,delete_ingeridient,get_unique_ingredient_categories,get_ingredients_by_category }

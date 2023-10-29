@@ -18,6 +18,10 @@ async function getMenuItems(){
     var query_string=`SELECT * FROM get_menu_items()`
     return await executeQuery(query_string);
 }
+async function get_menu_items_by_category(event){
+    var query_string=`SELECT * FROM get_menu_items_by_category('${event.category}')`
+    return await executeQuery(query_string);
+}
 
 async function add_menu_item(event){
     executeQuery(`SELECT public.add_menu_item('${event.category}', '${event.item}')`)
@@ -30,7 +34,12 @@ async function delete_menu_item(event){
     executeQuery(`SELECT public.delete_menu_item('${event.id}')`)
 }
 
+async function  get_unique_menu_categories(){
+    var query_string=`SELECT * FROM get_unique_menu_categories()`
+    return await executeQuery(query_string);
+
+};
 
 
-module.exports ={testFunc,getMenuItems,add_menu_item,update_menu_item, delete_menu_item}
+module.exports ={testFunc,getMenuItems,get_menu_items_by_category,add_menu_item,update_menu_item, delete_menu_item,get_unique_menu_categories}
 
