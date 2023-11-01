@@ -1,13 +1,16 @@
 const { executeQuery } = require("./postgres_connection");
 
-
 async function selectAllIngeridient(event) {
   try {
-    console.log(`SELECT * FROM public.get_ingredients_by_category('${event.category}')`);
-    let data = await executeQuery(`SELECT * FROM public.get_ingredients_by_category('${event.category}')`);
-    return data
+    console.log(
+      `SELECT * FROM public.get_ingredients_by_category('${event.category}')`
+    );
+    let data = await executeQuery(
+      `SELECT * FROM public.get_ingredients_by_category('${event.category}')`
+    );
+    return data;
   } catch (error) {
-    console.error('Error executing function:', error);
+    console.error("Error executing function:", error);
   }
 }
 
@@ -21,56 +24,67 @@ async function add_ingeridient(event) {
       ratePerUnit = null;
     }
 
-    executeQuery(`SELECT public.add_ingredient('${event.category}', '${event.item}', '${event.unit}', ${ratePerUnit})`);
-
+    executeQuery(
+      `SELECT public.add_ingredient('${event.category}', '${event.item}', '${event.unit}', ${ratePerUnit})`
+    );
   } catch (error) {
-    console.error('Error executing function:', error);
+    console.error("Error executing function:", error);
   }
 }
 
 async function update_ingeridient(event) {
   try {
+    let ratePerUnit = event.rate_per_unit;
 
-    let ratePerUnit = event.ratePerUnit;
-
-    if (ratePerUnit === null || !isNaN(ratePerUnit)) {
+    if (ratePerUnit != "" && (ratePerUnit === null || !isNaN(ratePerUnit))) {
       ratePerUnit = parseFloat(ratePerUnit);
     } else {
       ratePerUnit = null;
     }
-    executeQuery(`SELECT public.update_ingredient_by_id('${event.id}','${event.category}', '${event.item}', ${ratePerUnit}, '${event.unit}')`);
-
+    console.log(ratePerUnit);
+    executeQuery(
+      `SELECT public.update_ingredient_by_id('${event.id}','${event.category}', '${event.item}', ${ratePerUnit}, '${event.unit}')`
+    );
   } catch (error) {
-    console.error('Error executing function:', error);
+    console.error("Error executing function:", error);
   }
 }
 async function delete_ingeridient(event) {
   try {
-  
     executeQuery(`SELECT public.delete_ingredient_by_id(${event.id})`);
-
   } catch (error) {
-    console.error('Error executing function:', error);
+    console.error("Error executing function:", error);
   }
 }
 
 async function get_unique_ingredient_categories() {
   try {
-    let data = await executeQuery(`SELECT * FROM get_unique_ingredient_categories() `);
-    return data
+    let data = await executeQuery(
+      `SELECT * FROM get_unique_ingredient_categories() `
+    );
+    return data;
   } catch (error) {
-    console.error('Error executing function:', error);
+    console.error("Error executing function:", error);
   }
 }
 
 async function get_ingredients_by_category(event) {
-  try {console.log({event});
-    let data = await executeQuery(`SELECT * FROM get_ingredients_by_category('${event.category}') `);
-    return data
+  try {
+    console.log({ event });
+    let data = await executeQuery(
+      `SELECT * FROM get_ingredients_by_category('${event.category}') `
+    );
+    return data;
   } catch (error) {
-    console.error('Error executing function:', error);
+    console.error("Error executing function:", error);
   }
 }
 
-
-module.exports = { add_ingeridient, selectAllIngeridient,update_ingeridient,delete_ingeridient,get_unique_ingredient_categories,get_ingredients_by_category }
+module.exports = {
+  add_ingeridient,
+  selectAllIngeridient,
+  update_ingeridient,
+  delete_ingeridient,
+  get_unique_ingredient_categories,
+  get_ingredients_by_category,
+};
