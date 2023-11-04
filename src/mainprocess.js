@@ -1,4 +1,5 @@
-const { add_ingeridient,  update_ingeridient, delete_ingeridient, selectAllIngeridient, get_unique_ingredient_categories, get_ingredients_by_category } = require("./ingredientsCrudFunctions");
+const { add_event, update_event, selectEventColumn, copyEvent, eventFilter } = require("./eventCrudFunction");
+const { add_ingeridient, update_ingeridient, delete_ingeridient, selectAllIngeridient, get_unique_ingredient_categories, get_ingredients_by_category } = require("./ingredientsCrudFunctions");
 const { getMenuItems, add_menu_item, update_menu_item, delete_menu_item, testFunc, get_unique_menu_categories, get_menu_items_by_category } = require("./menuCrudFunction");
 const services = {
     test: {
@@ -68,6 +69,36 @@ const services = {
         method: (event) => delete_ingeridient(event)
     },
     // {"service":"delete_ingeridient","id":352}
+
+
+    // ------------------------------  EVENT   --------------------
+    add_event: {
+        description: "add event in DB",
+        method: (event) => add_event(event)
+    },
+    // {"service":"add_event","query":  [  "Event Title","Organizer Name","Event Type","Event Address","Event Venue","2023-11-03 13:00:00","2023-11-03 15:00:00",100,"1234567890","1000","500","500","10","Additional Note"]}
+
+    selectEventColumn: {
+        description: "select event column based on ID from DB",
+        method: (event) => selectEventColumn(event)
+    },
+    // {"service":"selectEventColumn","columns":  ["event_title","organizer","event_type","date_of_function"], "id": 5}
+
+    update_event: {
+        description: "add event in DB",
+        method: (event) => update_event(event)
+    },
+    // {"service":"update_event","newEventData":  {"event_title": "aaaa","organizer": "New Organizer Name","event_type": "New Event Type","address": "New Event Address","venue": "New Event Venue","mobile_number": "000","booking_amount": "1200","menu": {"abc":123}}, "id": 5}
+    copyEvent: {
+        description: "copy event using ID",
+        method: (event) => copyEvent(event)
+    },
+    // {"service":"copyEvent","id": 5}
+    eventFilter: {
+        description: "copy event using ID",
+        method: (event) => eventFilter(event)
+    },
+    // {"service":"eventFilter","filter" : {"event_title": "zzz" ,"organizer": "New balaji" }}
 }
 
 async function checkServices(event) {
