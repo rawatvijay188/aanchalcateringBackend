@@ -88,5 +88,10 @@ async function eventFilter(event) {
     return await executeQuery(sqlQuery);
 }
 
+async function delete_event(event) {
+    const sqlQuery = `DELETE FROM public.events
+	WHERE  id = ${event.id};`;
+    executeQuery(sqlQuery);
+}
 
-module.exports = { add_event, update_event, selectEventColumn, copyEvent, eventFilter }
+module.exports = { add_event, update_event, selectEventColumn, copyEvent, eventFilter, delete_event }

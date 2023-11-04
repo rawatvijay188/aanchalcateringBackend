@@ -1,4 +1,4 @@
-const { add_event, update_event, selectEventColumn, copyEvent, eventFilter } = require("./eventCrudFunction");
+const { add_event, update_event, selectEventColumn, copyEvent, eventFilter, delete_event } = require("./eventCrudFunction");
 const { add_ingeridient, update_ingeridient, delete_ingeridient, selectAllIngeridient, get_unique_ingredient_categories, get_ingredients_by_category } = require("./ingredientsCrudFunctions");
 const { getMenuItems, add_menu_item, update_menu_item, delete_menu_item, testFunc, get_unique_menu_categories, get_menu_items_by_category } = require("./menuCrudFunction");
 const services = {
@@ -99,6 +99,11 @@ const services = {
         method: (event) => eventFilter(event)
     },
     // {"service":"eventFilter","filter" : {"event_title": "zzz" ,"organizer": "New balaji" }}
+    delete_event: {
+        description: "delete event using ID",
+        method: (event) => delete_event(event)
+    },
+    // {"service":"delete_event","id": 1}
 }
 
 async function checkServices(event) {
