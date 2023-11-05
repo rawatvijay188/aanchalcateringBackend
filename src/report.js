@@ -1,6 +1,5 @@
 const { executeQuery } = require("./postgres_connection");
 
-
 async function report_filter(event) {
     let whereClause = '';
     for (const key in event.filter) {

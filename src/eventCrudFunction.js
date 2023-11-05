@@ -69,12 +69,12 @@ async function copyEvent(event) {
 
 async function eventFilter(event) {
     let whereClause = '';
-    const values = [];
+    // const values = [];
 
     for (const key in event.filter) {
         if (event.filter[key] !== undefined && event.filter[key] !== null) {
             whereClause += `${key} = '${event.filter[key]}' AND `;
-            values.push(event.filter[key]);
+            // values.push(event.filter[key]);
         }
     }
 
