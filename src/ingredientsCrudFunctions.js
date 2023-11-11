@@ -1,12 +1,12 @@
 const { executeQuery } = require("./postgres_connection");
 
-async function selectAllIngeridient(event) {
+async function selectAllIngeridient() {
   try {
     console.log(
-      `SELECT * FROM public.get_ingredients_by_category('${event.category}')`
+      `SELECT * FROM public.get_all_ingredients()`
     );
     let data = await executeQuery(
-      `SELECT * FROM public.get_ingredients_by_category('${event.category}')`
+      `SELECT * FROM public.get_all_ingredients()`
     );
     return data;
   } catch (error) {

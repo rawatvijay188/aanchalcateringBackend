@@ -194,3 +194,19 @@ BEGIN
     WHERE ingredients.category = p_category;
 END;
 $$ LANGUAGE plpgsql;
+
+--11
+CREATE OR REPLACE FUNCTION get_all_ingredients()
+RETURNS TABLE (
+    id INT,
+    category VARCHAR(50),
+    item VARCHAR(50),
+    rate_per_unit FLOAT,
+    unit VARCHAR(50)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT ingredients.id, ingredients.category, ingredients.item, ingredients.rate_per_unit, ingredients.unit
+    FROM public.ingredients;
+END;
+$$ LANGUAGE plpgsql;

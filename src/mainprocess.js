@@ -46,9 +46,9 @@ const services = {
     // {"service":"add_ingredient","category":"testCategory", "item":"test_item","ratePerUnit": "null", "unit":"kg"}
     selectAllIngeridient: {
         description: "select data base on category from DB",
-        method: (event) => selectAllIngeridient(event)
+        method: () => selectAllIngeridient()
     },
-    // {"service":"selectAllIngeridient","category":"Bardana"}
+    // {"service":"selectAllIngeridient"}
     get_unique_ingredient_categories: {
         description: "select data base on category from DB",
         method: (event) => get_unique_ingredient_categories(event)
