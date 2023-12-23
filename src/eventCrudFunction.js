@@ -82,16 +82,20 @@ async function eventFilter(event) {
         whereClause = 'WHERE ' + whereClause.slice(0, -5); // Remove the last 'AND'
     }
 
-    const sqlQuery = `SELECT id, event_title, organizer, event_type, address, venue, date_of_booking, date_of_function, number_of_person,
-    mobile_number, booking_amount, advance, balance, price_per_plate, note FROM events ${whereClause}`;
+    const sqlQuery = `SELECT * FROM events ${whereClause}`;
     // return sqlQuery
     return await executeQuery(sqlQuery);
 }
 
+async function eventFilterByDate(event) {
+    const sqlQuery = `SELECT * FROM events where date_of_function>='${event.from_date}'::DATE and date_of_function<='${event.to_date}'::DATE`;
+    // return sqlQuery
+    return await executeQuery(sqlQuery);
+}
 async function delete_event(event) {
     const sqlQuery = `DELETE FROM public.events
 	WHERE  id = ${event.id};`;
     executeQuery(sqlQuery);
 }
 
-module.exports = { add_event, update_event, selectEventColumn, copyEvent, eventFilter, delete_event }
+module.exports = { add_event, update_event, selectEventColumn, copyEvent, eventFilter, delete_event, eventFilterByDate }

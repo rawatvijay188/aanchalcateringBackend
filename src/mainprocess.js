@@ -1,4 +1,4 @@
-const { add_event, update_event, selectEventColumn, copyEvent, eventFilter, delete_event } = require("./eventCrudFunction");
+const { add_event, update_event, selectEventColumn, copyEvent, eventFilter, delete_event,eventFilterByDate } = require("./eventCrudFunction");
 const { add_ingeridient, update_ingeridient, delete_ingeridient, selectAllIngeridient, get_unique_ingredient_categories, get_ingredients_by_category } = require("./ingredientsCrudFunctions");
 const { getMenuItems, add_menu_item, update_menu_item, delete_menu_item, testFunc, get_unique_menu_categories, get_menu_items_by_category } = require("./menuCrudFunction");
 const { report_filter } = require("./report");
@@ -100,6 +100,10 @@ const services = {
         method: (event) => eventFilter(event)
     },
     // {"service":"eventFilter","filter" : {"event_title": "zzz" ,"organizer": "New balaji" }}
+    eventFilterByDate: {
+        description: "filter events by given date range",
+        method: (event) => eventFilterByDate(event)
+    },
     delete_event: {
         description: "delete event using ID",
         method: (event) => delete_event(event)
