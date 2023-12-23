@@ -88,7 +88,7 @@ async function eventFilter(event) {
 }
 
 async function eventFilterByDate(event) {
-    const sqlQuery = `SELECT * FROM events where date_of_function>='${event.from_date}'::DATE and date_of_function<='${event.to_date}'::DATE`;
+    const sqlQuery = `SELECT * FROM events WHERE DATE(date_of_function) BETWEEN '${event.from_date}'::DATE AND '${event.to_date}'::DATE;`
     // return sqlQuery
     return await executeQuery(sqlQuery);
 }
