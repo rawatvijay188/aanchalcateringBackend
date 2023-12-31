@@ -23,7 +23,10 @@ const {
   get_unique_menu_categories,
   get_menu_items_by_category,
 } = require("./menuCrudFunction");
-const { report_filter } = require("./report");
+const {
+  combined_report_filter,
+  segregated_report_filter,
+} = require("./report");
 const {
   addBill,
   billHistory,
@@ -134,9 +137,13 @@ const services = {
   },
   // {"service":"delete_event","id": 1}
 
-  report_filter: {
+  combined_report_filter: {
     description: "event filter for menu and ingredient",
-    method: (event) => report_filter(event),
+    method: (event) => combined_report_filter(event),
+  },
+  segregated_report_filter: {
+    description: "event filter for menu and ingredient",
+    method: (event) => segregated_report_filter(event),
   },
 
   add_bill: {
@@ -159,7 +166,7 @@ const services = {
 };
 
 async function checkServices(event) {
-  console.log(event)
+  console.log(event);
   if (event) {
     if (services[event.service]) {
       return await services[event.service]["method"](event);

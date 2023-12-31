@@ -1,6 +1,6 @@
 const { executeQuery } = require("./postgres_connection");
 
-async function report_filter(event) {
+async function combined_report_filter(event) {
   const sqlQuery = `SELECT 
                     ing->>'item' AS item,
                     ing->>'category' AS category,
@@ -34,4 +34,14 @@ async function report_filter(event) {
   return results;
 }
 
-module.exports = { report_filter };
+async function segregated_report_filter(event) {
+  console.log(event)
+  const sqlQuery = `SELECT * FROM events WHERE 
+                    DATE(date_of_function) BETWEEN '${event.from_date}'::DATE 
+                    AND '${event.to_date}'::DATE
+                    AND event_title IN (${"'" + event.event_title.join("', '") + "'"})`;
+  console.log(sqlQuery);
+  const results = await executeQuery(sqlQuery);
+  return results;
+}
+module.exports = { combined_report_filter, segregated_report_filter };
