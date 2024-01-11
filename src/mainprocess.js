@@ -166,15 +166,55 @@ const services = {
 };
 
 async function checkServices(event) {
-  console.log(event);
-  if (event) {
-    if (services[event.service]) {
-      return await services[event.service]["method"](event);
+  try {
+    console.log(event);
+
+    // Set CORS headers
+    // const headers = {
+    //   "Access-Control-Allow-Origin": "*", // or specify your allowed origins
+    //   "Access-Control-Allow-Headers":
+    //     "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,auth-token",
+    //   "Access-Control-Allow-Methods": "GET,OPTIONS,POST,PUT,DELETE",
+    //   'Access-Control-Expose-Headers': 'Access-Control-Allow-Origin',
+    // };
+
+    // Handle preflight requests (OPTIONS)
+    // if (event.httpMethod === "OPTIONS") {
+    //   return {
+    //     statusCode: 200,
+    //     headers,
+    //     body: JSON.stringify("Preflight request received"),
+    //   };
+    // }
+
+    // Check if the service exists
+    if (event && event.service && services[event.service]) {
+      // Execute the service method
+      const response = await services[event.service].method(event);
+
+      // Attach CORS headers to the response
+
+      // return {
+      //   statusCode: 200,
+      //   headers,
+      //   body: response,
+      // };
+      // response.headers = headers;
+      // console.log(response);
+      return response;
     } else {
-      throw new Error(`Error: [${event.service}] is not a valid service`);
+      throw new Error(
+        `Error: [${event && event.service}] is not a valid service`
+      );
     }
-  } else {
-    throw new Error("Not a valid request object");
+  } catch (error) {
+    console.error(error);
+    // Attach CORS headers to error responses
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: error.message }),
+    };
   }
 }
 

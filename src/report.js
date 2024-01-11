@@ -30,6 +30,7 @@ async function combined_report_filter(event) {
                     })
                     )
                 GROUP BY ing->>'item', ing->>'category';`;
+                console.log(sqlQuery)
   const results = await executeQuery(sqlQuery);
   return results;
 }

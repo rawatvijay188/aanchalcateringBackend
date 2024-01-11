@@ -1,5 +1,6 @@
 const { Pool, Client } = require("pg");
 const fs = require("fs");
+const path = require('path');
 
 
 require("dotenv").config();
@@ -13,7 +14,7 @@ const config = {
     ssl: {
         rejectUnauthorized: false,
         ca: fs
-          .readFileSync(`${__dirname}\\certs\\ap-south-1-bundle.pem`)
+          .readFileSync(path.join(__dirname, 'certs', 'ap-south-1-bundle.pem'))
           .toString(),
       },
 }
